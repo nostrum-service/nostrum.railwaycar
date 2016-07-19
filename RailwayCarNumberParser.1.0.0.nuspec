@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>RailwayCarNumberParser</id>
+        <version>1.0.0</version>
+        <authors>Nostrum</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Russian railway car number parser</description>
+        <copyright>Nostrum</copyright>
+    </metadata>
+    <files>
+        <file src="nostrum.railwaycar\nostrum.railwaycar.csproj" target="content\net46\nostrum.railwaycar\nostrum.railwaycar.csproj" />
+        <file src="nostrum.railwaycar\num_vag_2005.pdf" target="content\net46\nostrum.railwaycar\num_vag_2005.pdf" />
+        <file src="nostrum.railwaycar\RailwayCarInfo.cs" target="content\net46\nostrum.railwaycar\RailwayCarInfo.cs" />
+        <file src="nostrum.railwaycar.sln" target="content\net46\nostrum.railwaycar.sln" />
+        <file src="nostrum.railwaycar\num_vag_2005.pdf" target="content\num_vag_2005.pdf" />
+        <file src="nostrum.railwaycar\bin\Release\nostrum.railwaycar.dll" target="lib\net46\nostrum.railwaycar.dll" />
+        <file src="src\RailwayCarInfo.cs" target="src\RailwayCarInfo.cs" />
+        <file src="tools\install.ps1" target="tools\install.ps1" />
+        <file src="tools\uninstall.ps1" target="tools\uninstall.ps1" />
+    </files>
+</package>
