@@ -26,12 +26,19 @@ namespace Test
         }
 
         [TestMethod]
-        public void TestCarAxless()
+        public void TestCarAxles_53240180()
         {
             RailwayCarInfo hopper = RailwayCarInfo.ParseCarNumber("53240180");
             Assert.AreEqual(4, hopper.Axles, "Car axless calculation error");
         }
 
+        [TestMethod]
+        public void TestCarAxles_90299637()
+        {
+            RailwayCarInfo hopper = RailwayCarInfo.ParseCarNumber("90299637");
+            Assert.AreEqual(4, hopper.Axles, "Car axless calculation error");
+        }
+        
         
         [TestMethod]
         public void TestCarNumber_53240180()

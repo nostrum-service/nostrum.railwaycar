@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace nostrum.railwaycar
@@ -47,6 +48,13 @@ namespace nostrum.railwaycar
 
         [XmlIgnore]
         public int? Axles { get; set; }
+
+        [XmlAttribute("Axles")]
+        public string AxlesAsText
+        {
+            get { return (Axles.HasValue) ? Axles.ToString() : null; }
+            set { Axles = !string.IsNullOrEmpty(value) ? int.Parse(value) : default(int?); }
+        }
 
         [XmlIgnore]
         public int? Length { get; set; }
@@ -181,8 +189,7 @@ namespace nostrum.railwaycar
             RailwayCarInfo result = new RailwayCarInfo
             {
                 Number = number,
-                IsNumberValid = CheckNumber(number),
-                Axles = GetAxles(number)
+                IsNumberValid = CheckNumber(number)
             };
 
             result.d1 = null;
@@ -235,7 +242,7 @@ namespace nostrum.railwaycar
                     result.CarTypeName = data.CarTypeName;
                     result.MainCharacteristic = data.MainCharacteristic;
                     result.AdditionalCharacteristic = data.AdditionalCharacteristic;
-                    //result.Axles = data.Axles;
+                    result.Axles = data.Axles;
                     result.HasBrakePad = data.HasBrakePad;
                     result.IsPrivate = data.IsPrivate;
                     result.Length = data.Length;
@@ -272,32 +279,6 @@ namespace nostrum.railwaycar
             }
 
             return false;
-        }
-
-        public static int? GetAxles(String number)
-        {
-            int? axles = null;
-
-            try
-            {
-                number = Regex.Replace(number, @"\s{1,}", "");
-                String code = number.Substring(1, 1);
-
-                if (code == "0" || code == "1")
-                    axles = 2;
-                else if (code == "2" || code == "3" || code == "4" || code == "5" || code == "6" || code == "7")
-                    axles = 4;
-                else if (code == "8")
-                    axles = 6;
-                else if (code == "9")
-                    axles = null;
-            }
-            catch
-            {
-                axles = null;
-            }
-
-            return axles;
         }
 
         public string Number { get; set; }
