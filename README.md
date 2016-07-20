@@ -1,6 +1,8 @@
 # nostrum.railwaycar
 Осуществляет разбор номера вагона в соответствии с 8-значной системой нумерации грузовых вагонов колеи 1520 мм
 
+<pre><code class='language-cs'>
+public static void Main()
 {
   RailwayCarInfo hopper = RailwayCarInfo.ParseCarNumber("53240180");
   
@@ -15,5 +17,5 @@
   //Собственный
   //С тормозной площадкой
   //Номер указан правильно
-  
 }
+</code></pre>
