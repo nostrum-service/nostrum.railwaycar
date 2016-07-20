@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -30,7 +31,9 @@ namespace nostrum.railwaycar
         gondola,
 
         [Description("изотермический")]
-        isothermal
+        isothermal,
+
+        undefined
     }
 
     [XmlType("RailwayCarData")]
@@ -68,8 +71,45 @@ namespace nostrum.railwaycar
         [XmlAttribute("TypeNumber")]
         public string TypeNumber { get; set; }
 
-        [XmlAttribute("CarType")]
-        public string CarType { get; set; }
+        [XmlIgnore]
+        public CarTypeEnum CarType { get; set; }
+
+        [XmlAttribute("CarTypeName")]
+        public string CarTypeName
+        {
+            get
+            {
+                return CarType == CarTypeEnum.undefined ? string.Empty : GetEnumDescription(CarType);
+            }
+
+            set
+            {
+                value = value.ToLower().Trim();
+                if (CarTypeName != value)
+                {
+                    CarType = GetCarType(value);
+                }
+            }
+        }
+
+        public static CarTypeEnum GetCarType(string carTypeDescription)
+        {
+            carTypeDescription = carTypeDescription.Trim().ToLower();
+            var src = from tmp in Enum.GetValues(typeof(CarTypeEnum)).Cast<CarTypeEnum>() where GetEnumDescription(tmp) == carTypeDescription select tmp;
+            return src.Any() ? src.First() : CarTypeEnum.undefined;
+        }
+
+        public static string GetEnumDescription(object value)
+        {
+            FieldInfo fi = value.GetType().GetField(value.ToString());
+
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+            if (attributes != null && attributes.Length > 0)
+                return attributes[0].Description;
+            else
+                return value.ToString();
+        }
 
         [XmlAttribute("MainCharacteristic")]
         public string MainCharacteristic { get; set; }
@@ -192,9 +232,10 @@ namespace nostrum.railwaycar
                 if (data != null)
                 {
                     result.CarType = data.CarType;
+                    result.CarTypeName = data.CarTypeName;
                     result.MainCharacteristic = data.MainCharacteristic;
                     result.AdditionalCharacteristic = data.AdditionalCharacteristic;
-                    //result.Axless = data.Axless;
+                    //result.Axles = data.Axles;
                     result.HasBrakePad = data.HasBrakePad;
                     result.IsPrivate = data.IsPrivate;
                     result.Length = data.Length;
@@ -268,7 +309,9 @@ namespace nostrum.railwaycar
         public decimal? TareWeight { get; set; }
         public string TypeNumber { get; set; }
 
-        public string CarType { get; set; }
+        public string CarTypeName { get; set; }
+        public CarTypeEnum CarType { get; set; }
+
         public string MainCharacteristic { get; set; }
         public string AdditionalCharacteristic { get; set; }
 
@@ -285,7 +328,7 @@ namespace nostrum.railwaycar
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("№ вагона: " + Number);
-            sb.AppendLine("Род вагона: " + CarType);
+            sb.AppendLine("Род вагона: " + CarTypeName);
             sb.AppendLine("Основная характеристика: " + MainCharacteristic);
             sb.AppendLine("Число осей: " + Axles);
             sb.AppendLine("Дополнительная характеристика: " + AdditionalCharacteristic);
