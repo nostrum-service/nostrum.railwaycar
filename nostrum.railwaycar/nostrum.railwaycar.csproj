@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="num_vag_2005.pdf" />
+    <None Include="RailwayCarNumberParser.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.txt" />

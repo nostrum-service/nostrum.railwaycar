@@ -43,7 +43,7 @@ namespace nostrum.railwaycar
         public bool HasBrakePad { get; set; }
 
         [XmlIgnore]
-        public int? Axless { get; set; }
+        public int? Axles { get; set; }
 
         [XmlIgnore]
         public int? Length { get; set; }
@@ -141,8 +141,8 @@ namespace nostrum.railwaycar
             RailwayCarInfo result = new RailwayCarInfo
             {
                 Number = number,
-                IsNumberCorrect = CheckNumber(number),
-                Axless = GetAxles(number)
+                IsNumberValid = CheckNumber(number),
+                Axles = GetAxles(number)
             };
 
             result.d1 = null;
@@ -179,7 +179,7 @@ namespace nostrum.railwaycar
             if (number.Length > 7)
                 result.d8 = int.TryParse(number.Substring(7, 1), out tmp) ? (int?)tmp : null;
 
-            if (result.IsNumberCorrect)
+            if (result.IsNumberValid)
             {
                 RailwayCarData data = source.CarTypes.FirstOrDefault(x => x.d1 == (int)result.d1
                     && x.d2_min <= (int)result.d2 && x.d2_max >= (int)result.d2
@@ -260,10 +260,10 @@ namespace nostrum.railwaycar
         }
 
         public string Number { get; set; }
-        public bool IsNumberCorrect { get; set; }
+        public bool IsNumberValid { get; set; }
         public bool? IsPrivate { get; set; }
         public bool? HasBrakePad { get; set; }
-        public int? Axless { get; set; }
+        public int? Axles { get; set; }
         public int? Length { get; set; }
         public decimal? TareWeight { get; set; }
         public string TypeNumber { get; set; }
@@ -287,7 +287,7 @@ namespace nostrum.railwaycar
             sb.AppendLine("№ вагона: " + Number);
             sb.AppendLine("Род вагона: " + CarType);
             sb.AppendLine("Основная характеристика: " + MainCharacteristic);
-            sb.AppendLine("Число осей: " + Axless);
+            sb.AppendLine("Число осей: " + Axles);
             sb.AppendLine("Дополнительная характеристика: " + AdditionalCharacteristic);
             sb.AppendLine(string.Format("Масса тары, т: {0:n2}", TareWeight));
             sb.AppendLine(string.Format("Длина вагона, мм: {0:n0}", Length));
@@ -305,7 +305,7 @@ namespace nostrum.railwaycar
                     sb.AppendLine("Без тормозной площадки");
             }
 
-            if (IsNumberCorrect)
+            if (IsNumberValid)
                 sb.AppendLine("Номер указан правильно");
             else
                 sb.AppendLine("Номер указан неправильно");

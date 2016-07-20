@@ -11,14 +11,14 @@ namespace Test
         public void TestValidNumber()
         {
             RailwayCarInfo hopper = RailwayCarInfo.ParseCarNumber("53240180");
-            Assert.AreEqual(true, hopper.IsNumberCorrect, "Car number not valid");
+            Assert.AreEqual(true, hopper.IsNumberValid, "Car number not valid");
         }
 
         [TestMethod]
         public void TestCarAxless()
         {
             RailwayCarInfo hopper = RailwayCarInfo.ParseCarNumber("53240180");
-            Assert.AreEqual(4, hopper.Axless, "Car axless calculation error");
+            Assert.AreEqual(4, hopper.Axles, "Car axless calculation error");
         }
 
         [TestMethod]
@@ -27,7 +27,7 @@ namespace Test
             RailwayCarInfo hopper = RailwayCarInfo.ParseCarNumber("53240180");
 
             Assert.AreEqual("53240180", hopper.Number, "Car number 53240180 parse error");
-            Assert.AreEqual(true, hopper.IsNumberCorrect, "Car number 53240180 parse error");
+            Assert.AreEqual(true, hopper.IsNumberValid, "Car number 53240180 parse error");
 
             Assert.AreEqual(5, hopper.d1, "Car number 53240180 digit 1 parse error");
             Assert.AreEqual(3, hopper.d2, "Car number 53240180 digit 2 parse error");
@@ -45,7 +45,7 @@ namespace Test
             Assert.AreEqual(true, hopper.HasBrakePad, "Car number 53240180 car brake pad parse error");
             Assert.AreEqual(true, hopper.IsPrivate, "Car number 53240180 car private state parse error");
             Assert.AreEqual("5931", hopper.TypeNumber, "Car number 53240180 car type number parse error");
-            Assert.AreEqual(4, hopper.Axless, "Car number 53240180 axless parse error");
+            Assert.AreEqual(4, hopper.Axles, "Car number 53240180 axless parse error");
 
             //№ вагона: 53240180
             //Род вагона: Прочие
